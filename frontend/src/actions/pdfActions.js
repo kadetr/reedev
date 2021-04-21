@@ -24,7 +24,9 @@ export const uploadPdf = (name, file) => async (dispatch, getState) => {
 
       const config = {
          headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${userInfo.token}`,
+            
          },
       };
 
@@ -65,7 +67,6 @@ export const getPdfDetails = (id) => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
          },
       };
-      console.log("hee");
 
       const { data } = await axios.get(`/api/pdfs/${id}`, config);
 
