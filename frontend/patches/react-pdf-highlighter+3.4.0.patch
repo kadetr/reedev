@@ -1,0 +1,110 @@
+diff --git a/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js b/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
+index 9217007..1751469 100644
+--- a/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
++++ b/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
+@@ -8,27 +8,28 @@ class AreaHighlight extends Component {
+   render() {
+     const {
+       highlight,
+-      onChange,
++      onClick,
++      // onChange,
+       ...otherProps
+     } = this.props;
+     return /*#__PURE__*/React.createElement(Rnd, _extends({
+       className: "AreaHighlight",
+-      onDragStop: (_, data) => {
+-        const boundingRect = { ...highlight.position.boundingRect,
+-          top: data.y,
+-          left: data.x
+-        };
+-        onChange(boundingRect);
+-      },
+-      onResizeStop: (_, direction, ref, delta, position) => {
+-        const boundingRect = {
+-          top: position.y,
+-          left: position.x,
+-          width: ref.offsetWidth,
+-          height: ref.offsetHeight
+-        };
+-        onChange(boundingRect);
+-      },
++      // onDragStop: (_, data) => {
++      //   const boundingRect = { ...highlight.position.boundingRect,
++      //     top: data.y,
++      //     left: data.x
++      //   };
++      //   onChange(boundingRect);
++      // },
++      // onResizeStop: (_, direction, ref, delta, position) => {
++      //   const boundingRect = {
++      //     top: position.y,
++      //     left: position.x,
++      //     width: ref.offsetWidth,
++      //     height: ref.offsetHeight
++      //   };
++      //   onChange(boundingRect);
++      // },
+       position: {
+         x: highlight.position.boundingRect.left,
+         y: highlight.position.boundingRect.top
+@@ -37,10 +38,11 @@ class AreaHighlight extends Component {
+         width: highlight.position.boundingRect.width,
+         height: highlight.position.boundingRect.height
+       },
+-      onClick: event => {
+-        event.stopPropagation();
+-        event.preventDefault();
+-      }
++      onClick: onClick,
++      // onClick: event => {
++      //   event.stopPropagation();
++      //   event.preventDefault();
++      // }
+     }, otherProps));
+   }
+ 
+diff --git a/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js b/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
+index f939b20..275d0bc 100644
+--- a/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
++++ b/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
+@@ -443,13 +443,13 @@ class PdfHighlighter extends PureComponent {
+       onContextMenu: e => e.preventDefault()
+     }, /*#__PURE__*/React.createElement("div", {
+       className: "pdfViewer"
+-    }), this.renderTip(), typeof enableAreaSelection === "function" ? /*#__PURE__*/React.createElement(MouseSelection, {
++    }), this.renderTip(), enableAreaSelection ? /*#__PURE__*/React.createElement(MouseSelection, {
+       onDragStart: () => this.toggleTextSelection(true),
+       onDragEnd: () => this.toggleTextSelection(false),
+       onChange: isVisible => this.setState({
+         isAreaSelectionInProgress: isVisible
+       }),
+-      shouldStart: event => enableAreaSelection(event) && isHTMLElement(event.target) && Boolean(asElement(event.target).closest(".page")),
++      shouldStart: event => enableAreaSelection && isHTMLElement(event.target) && Boolean(asElement(event.target).closest(".page")),
+       onSelection: (startTarget, boundingRect, resetSelection) => {
+         const page = getPageFromElement(startTarget);
+ 
+diff --git a/node_modules/react-pdf-highlighter/build/components/Popup.js b/node_modules/react-pdf-highlighter/build/components/Popup.js
+index ef9eb38..245cfa3 100644
+--- a/node_modules/react-pdf-highlighter/build/components/Popup.js
++++ b/node_modules/react-pdf-highlighter/build/components/Popup.js
+@@ -14,16 +14,16 @@ class Popup extends Component {
+ 
+   render() {
+     const {
+-      onMouseOver,
++      onClick,
+       popupContent,
+       onMouseOut
+     } = this.props;
+     return /*#__PURE__*/React.createElement("div", {
+-      onMouseOver: () => {
++      onClick: () => {
+         this.setState({
+           mouseIn: true
+         });
+-        onMouseOver( /*#__PURE__*/React.createElement(MouseMonitor, {
++        onClick( /*#__PURE__*/React.createElement(MouseMonitor, {
+           onMoveAway: () => {
+             if (this.state.mouseIn) {
+               return;
