@@ -29,6 +29,6 @@ let upload = multer({
    },
 });
 
-router.post("/", upload.single("pdfFile"), protect, createPdf);
+router.post("/", protect, upload.single("pdfFile"), createPdf);
 
 export default router;
