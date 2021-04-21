@@ -8,7 +8,7 @@ import Pdf from "../models/pdfModel.js";
 const createPdf = asyncHandler(async (req, res) => {
    const { name } = req.body;
    const url =
-      req.protocol + "://" + req.get("host") + "/public/" + req.file.filename;
+      req.protocol + "s://" + req.get("host") + "/public/" + req.file.filename;
 
    const pdf = await Pdf.create({
       name,
