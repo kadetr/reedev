@@ -18,7 +18,7 @@ type Props = {
 };
 
 const updateHash = (highlight) => {
-   document.location.hash = `highlight-${highlight.id}`;
+   document.location.hash = `highlight-${highlight._id}`;
 };
 
 function CommentBar({
@@ -35,13 +35,19 @@ function CommentBar({
    );
    const { loadingH, errorH, comments } = commentsViewByHighlight;
    const commentAdd = useSelector((state) => state.commentAdd);
-   const { comment } = commentAdd;
 
    useEffect(() => {
       //WHY DOUBLE???
       dispatch(showCommentsByHighlight(highlight?._id));
-      if (comment !== "") dispatch(showCommentsByHighlight(highlight?._id));
-   }, [highlight, commentAdd]);
+      // if (comment !== "") dispatch(showCommentsByHighlight(highlight?._id));
+   }, [highlight]);
+
+   useEffect(() => {
+      //WHY DOUBLE???
+      dispatch(showCommentsByHighlight(highlight?._id));
+      console.log("hello")
+      // if (comment !== "") dispatch(showCommentsByHighlight(highlight?._id));
+   }, [commentAdd]);
 
    return (
       <div className="sidebar" style={{ width: "25vw" }}>
@@ -129,6 +135,7 @@ function CommentBar({
                onClick={() => {
                   submitCommentHandler(commentInput, highlight._id);
                   setCommentInput("");
+                  dispatch(showCommentsByHighlight(highlight._id));
                }}
                style={{
                   display: "flex",

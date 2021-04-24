@@ -40,10 +40,10 @@ const reducer = combineReducers({
    commentsViewByHighlight: commentsViewByHighlightReducer,
    commentAdd: commentAddReducer,
    highlightView: highlightViewReducer,
-   pdfDetails: pdftDetailsReducer,
-   pdfUpload: pdfUploadReducer,
    highlightViewByPdf: highlightViewByPdfReducer,
    highlightAdd: highlightAddReducer,
+   pdfDetails: pdftDetailsReducer,
+   pdfUpload: pdfUploadReducer,
    pdfList: pdfListReducer,
 });
 

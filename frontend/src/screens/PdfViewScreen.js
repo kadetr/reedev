@@ -18,6 +18,8 @@ const PdfViewScreen = ({ match, history }) => {
    const highlightViewByPdf = useSelector((state) => state.highlightViewByPdf);
    const { loadingH, errorH, highlights } = highlightViewByPdf;
    const highlightAdd = useSelector((state) => state.highlightAdd);
+   const {success} = highlightAdd
+
 
    const chooseText = () => {
       setArea(false);
@@ -33,16 +35,20 @@ const PdfViewScreen = ({ match, history }) => {
 
    useEffect(() => {
       dispatch(getPdfDetails(pdfId));
-   }, [pdf.url]);
+      dispatch(showHighlightsByPdf(pdfId));
+   }, []);
    useEffect(() => {
-      //WHY DOUBLE???
-      dispatch(showHighlightsByPdf(pdfId));
-      dispatch(showHighlightsByPdf(pdfId));
+         dispatch(showHighlightsByPdf(pdfId));
+        
    }, [highlightAdd]);
 
    const submitHighlightHandler = (content, position, comment, pdfId) => {
-      dispatch(addHighlight(content, position, comment, pdfId));
       setArea(false);
+      dispatch(addHighlight(content, position, comment, pdfId));
+      dispatch(showHighlightsByPdf(pdfId));
+      
+      
+      
    };
    const submitCommentHandler = (comment, parentId) => {
       if (comment) {
