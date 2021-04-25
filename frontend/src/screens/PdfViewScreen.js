@@ -38,8 +38,7 @@ const PdfViewScreen = ({ match, history }) => {
       dispatch(showHighlightsByPdf(pdfId));
    }, []);
    useEffect(() => {
-         dispatch(showHighlightsByPdf(pdfId));
-        
+         dispatch(showHighlightsByPdf(pdfId));   
    }, [highlightAdd]);
 
    const submitHighlightHandler = (content, position, comment, pdfId) => {
@@ -55,6 +54,7 @@ const PdfViewScreen = ({ match, history }) => {
          dispatch(addComment(comment, parentId));
       }
    };
+   console.log("area: "+area)
 
    return (
       <div style={{ display: "flex" }}>

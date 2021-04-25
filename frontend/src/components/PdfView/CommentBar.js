@@ -39,14 +39,11 @@ function CommentBar({
    useEffect(() => {
       //WHY DOUBLE???
       dispatch(showCommentsByHighlight(highlight?._id));
-      // if (comment !== "") dispatch(showCommentsByHighlight(highlight?._id));
    }, [highlight]);
 
    useEffect(() => {
       //WHY DOUBLE???
       dispatch(showCommentsByHighlight(highlight?._id));
-      console.log("hello")
-      // if (comment !== "") dispatch(showCommentsByHighlight(highlight?._id));
    }, [commentAdd]);
 
    return (
