@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js b/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
-index 9217007..1751469 100644
+index 9217007..c6ce066 100644
 --- a/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
 +++ b/node_modules/react-pdf-highlighter/build/components/AreaHighlight.js
 @@ -8,27 +8,28 @@ class AreaHighlight extends Component {
@@ -56,7 +56,7 @@ index 9217007..1751469 100644
 -        event.stopPropagation();
 -        event.preventDefault();
 -      }
-+      onClick: onClick,
++      onClick: event =>{onClick(); event.stopPropagation();},
 +      // onClick: event => {
 +      //   event.stopPropagation();
 +      //   event.preventDefault();
@@ -64,8 +64,197 @@ index 9217007..1751469 100644
      }, otherProps));
    }
  
+diff --git a/node_modules/react-pdf-highlighter/build/components/MouseSelection.js b/node_modules/react-pdf-highlighter/build/components/MouseSelection.js
+index e0e495a..81b1851 100644
+--- a/node_modules/react-pdf-highlighter/build/components/MouseSelection.js
++++ b/node_modules/react-pdf-highlighter/build/components/MouseSelection.js
+@@ -4,14 +4,17 @@ import React, { Component } from "react";
+ import { asElement, isHTMLElement } from "../lib/pdfjs-dom";
+ import "../style/MouseSelection.css";
+ 
++let container;
++
+ class MouseSelection extends Component {
+   constructor(...args) {
+     super(...args);
+ 
+     _defineProperty(this, "state", {
+-      locked: false,
+       start: null,
+-      end: null
++      end: null,
++      locked: false,
++      
+     });
+ 
+     _defineProperty(this, "root", void 0);
+@@ -38,6 +41,7 @@ class MouseSelection extends Component {
+     };
+   }
+ 
++   
+   componentDidUpdate() {
+     const {
+       onChange
+@@ -50,6 +54,8 @@ class MouseSelection extends Component {
+     onChange(isVisible);
+   }
+ 
++
++
+   componentDidMount() {
+     if (!this.root) {
+       return;
+@@ -62,7 +68,7 @@ class MouseSelection extends Component {
+       onDragEnd,
+       shouldStart
+     } = this.props;
+-    const container = asElement(this.root.parentElement);
++    container = asElement(this.root.parentElement);
+ 
+     if (!isHTMLElement(container)) {
+       return;
+@@ -81,7 +87,7 @@ class MouseSelection extends Component {
+       };
+     };
+ 
+-    container.addEventListener("mousemove", event => {
++    const onMouseMove = event =>{
+       const {
+         start,
+         locked
+@@ -94,73 +100,80 @@ class MouseSelection extends Component {
+       that.setState({ ...this.state,
+         end: containerCoords(event.pageX, event.pageY)
+       });
++  }  
++
++  const onMouseDown = event => {
++    if (!shouldStart(event)) {
++      this.reset();
++      return;
++    }
++
++    const startTarget = asElement(event.target);
++
++    if (!isHTMLElement(startTarget)) {
++      return;
++    }
++
++    onDragStart();
++    this.setState({
++      start: containerCoords(event.pageX, event.pageY),
++      end: null,
++      locked: false
+     });
+-    container.addEventListener("mousedown", event => {
+-      if (!shouldStart(event)) {
+-        this.reset();
++
++    const onMouseUp = event => {
++      // emulate listen once
++      event.currentTarget.removeEventListener("mouseup", onMouseUp);
++      const {
++        start
++      } = this.state;
++
++      if (!start) {
+         return;
+       }
+ 
+-      const startTarget = asElement(event.target);
++      const end = containerCoords(event.pageX, event.pageY);
++      const boundingRect = that.getBoundingRect(start, end);
+ 
+-      if (!isHTMLElement(startTarget)) {
++      if (!isHTMLElement(event.target) || !container.contains(asElement(event.target)) || !that.shouldRender(boundingRect)) {
++        that.reset();
+         return;
+       }
+ 
+-      onDragStart();
+-      this.setState({
+-        start: containerCoords(event.pageX, event.pageY),
+-        end: null,
+-        locked: false
+-      });
+-
+-      const onMouseUp = event => {
+-        // emulate listen once
+-        event.currentTarget.removeEventListener("mouseup", onMouseUp);
++      that.setState({
++        end,
++        locked: true
++      }, () => {
+         const {
+-          start
+-        } = this.state;
++          start,
++          end
++        } = that.state;
+ 
+-        if (!start) {
++        if (!start || !end) {
+           return;
+         }
+ 
+-        const end = containerCoords(event.pageX, event.pageY);
+-        const boundingRect = that.getBoundingRect(start, end);
++        if (isHTMLElement(event.target)) {
++          onSelection(startTarget, boundingRect, that.reset);
++          onDragEnd();
+ 
+-        if (!isHTMLElement(event.target) || !container.contains(asElement(event.target)) || !that.shouldRender(boundingRect)) {
+-          that.reset();
+-          return;
++    container.removeEventListener("mousemove", onMouseMove)
++    container.removeEventListener("mousedown", onMouseDown)
+         }
++      });
++    };
+ 
+-        that.setState({
+-          end,
+-          locked: true
+-        }, () => {
+-          const {
+-            start,
+-            end
+-          } = that.state;
+-
+-          if (!start || !end) {
+-            return;
+-          }
+-
+-          if (isHTMLElement(event.target)) {
+-            onSelection(startTarget, boundingRect, that.reset);
+-            onDragEnd();
+-          }
+-        });
+-      };
++    const {
++      ownerDocument: doc
++    } = container;
+ 
+-      const {
+-        ownerDocument: doc
+-      } = container;
++    if (doc.body) {
++      doc.body.addEventListener("mouseup", onMouseUp);
++    }}
++    
++    container.addEventListener("mousemove", onMouseMove)
++    container.addEventListener("mousedown", onMouseDown);
+ 
+-      if (doc.body) {
+-        doc.body.addEventListener("mouseup", onMouseUp);
+-      }
+-    });
+   }
+ 
+   shouldRender(boundingRect) {
 diff --git a/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js b/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
-index f939b20..275d0bc 100644
+index f939b20..d30e103 100644
 --- a/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
 +++ b/node_modules/react-pdf-highlighter/build/components/PdfHighlighter.js
 @@ -443,13 +443,13 @@ class PdfHighlighter extends PureComponent {
@@ -80,10 +269,28 @@ index f939b20..275d0bc 100644
          isAreaSelectionInProgress: isVisible
        }),
 -      shouldStart: event => enableAreaSelection(event) && isHTMLElement(event.target) && Boolean(asElement(event.target).closest(".page")),
-+      shouldStart: event => enableAreaSelection && isHTMLElement(event.target) && Boolean(asElement(event.target).closest(".page")),
++      shouldStart: event =>  isHTMLElement(event.target) && Boolean(asElement(event.target).closest(".page")),
        onSelection: (startTarget, boundingRect, resetSelection) => {
          const page = getPageFromElement(startTarget);
  
+diff --git a/node_modules/react-pdf-highlighter/build/components/PdfLoader.js b/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
+index 793f01c..a149c57 100644
+--- a/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
++++ b/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
+@@ -86,10 +86,10 @@ class PdfLoader extends Component {
+       error: null
+     });
+     Promise.resolve().then(() => discardedDocument && discardedDocument.destroy()).then(() => url && getDocument({
+-      url,
++      url: url,
+       ownerDocument,
+-      cMapUrl,
+-      cMapPacked
++      cMapUrl: "pdfjs/cmaps/",
++      cMapPacked: true,
+     }).promise.then(pdfDocument => {
+       this.setState({
+         pdfDocument
 diff --git a/node_modules/react-pdf-highlighter/build/components/Popup.js b/node_modules/react-pdf-highlighter/build/components/Popup.js
 index ef9eb38..245cfa3 100644
 --- a/node_modules/react-pdf-highlighter/build/components/Popup.js
@@ -108,3 +315,29 @@ index ef9eb38..245cfa3 100644
            onMoveAway: () => {
              if (this.state.mouseIn) {
                return;
+diff --git a/node_modules/react-pdf-highlighter/build/types.js.flow b/node_modules/react-pdf-highlighter/build/types.js.flow
+index d955006..0c3e601 100644
+--- a/node_modules/react-pdf-highlighter/build/types.js.flow
++++ b/node_modules/react-pdf-highlighter/build/types.js.flow
+@@ -53,7 +53,7 @@ export type T_NewHighlight = {
+ } & T_HighlightContent &
+   T_HighlightComment;
+ 
+-export type T_Highlight = { id: string } & T_NewHighlight;
++export type T_Highlight = { _id: string } & T_NewHighlight;
+ 
+ export type T_ViewportHighlight = {
+   position: T_Position
+diff --git a/node_modules/react-pdf-highlighter/src/types.js b/node_modules/react-pdf-highlighter/src/types.js
+index d955006..0c3e601 100644
+--- a/node_modules/react-pdf-highlighter/src/types.js
++++ b/node_modules/react-pdf-highlighter/src/types.js
+@@ -53,7 +53,7 @@ export type T_NewHighlight = {
+ } & T_HighlightContent &
+   T_HighlightComment;
+ 
+-export type T_Highlight = { id: string } & T_NewHighlight;
++export type T_Highlight = { _id: string } & T_NewHighlight;
+ 
+ export type T_ViewportHighlight = {
+   position: T_Position
