@@ -18,7 +18,7 @@ const PdfViewScreen = ({ match, history }) => {
    const highlightViewByPdf = useSelector((state) => state.highlightViewByPdf);
    const { loadingH, errorH, highlights } = highlightViewByPdf;
    const highlightAdd = useSelector((state) => state.highlightAdd);
-   const {success} = highlightAdd
+ 
 
 
    const chooseText = () => {
