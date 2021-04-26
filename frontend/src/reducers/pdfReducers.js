@@ -31,7 +31,7 @@ export const pdftDetailsReducer = (state = { pdf: {} }, action) => {
       case PDF_DETAILS_REQUEST:
          return { ...state, loading: true };
       case PDF_DETAILS_SUCCESS:
-         return { loading: false, pdf: action.payload };
+         return { loading: false, success:true, pdf: action.payload };
       case PDF_DETAILS_FAIL:
          return { loading: false, error: action.payload };
       default:

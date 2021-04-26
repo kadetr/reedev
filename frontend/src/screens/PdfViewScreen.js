@@ -14,7 +14,7 @@ const PdfViewScreen = ({ match, history }) => {
    const dispatch = useDispatch();
 
    const pdfDetails = useSelector((state) => state.pdfDetails);
-   const { loading, error, pdf } = pdfDetails;
+   const { loading, error,success, pdf } = pdfDetails;
    const highlightViewByPdf = useSelector((state) => state.highlightViewByPdf);
    const { loadingH, errorH, highlights } = highlightViewByPdf;
    const highlightAdd = useSelector((state) => state.highlightAdd);
@@ -34,8 +34,7 @@ const PdfViewScreen = ({ match, history }) => {
    };
 
    useEffect(() => {
-      if(!loading)
-         dispatch(getPdfDetails(pdfId));
+      dispatch(getPdfDetails(pdfId));
       dispatch(showHighlightsByPdf(pdfId));
    }, []);
    useEffect(() => {
@@ -58,14 +57,14 @@ const PdfViewScreen = ({ match, history }) => {
 
    return (
       <div style={{ display: "flex" }}>
-         <PdfView
+         {success ? <PdfView
             url={pdf.url}
             pdfId={pdfId}
             area={area}
             highlights={highlights}
             submitHighlightHandler={submitHighlightHandler}
             selectHighlight={selectHighlight}
-         />
+         />: null}
          <CommentBar
             chooseArea={chooseArea}
             chooseText={chooseText}
