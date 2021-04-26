@@ -54,7 +54,6 @@ const PdfViewScreen = ({ match, history }) => {
          dispatch(addComment(comment, parentId));
       }
    };
-   console.log("area: "+area)
 
    return (
       <div style={{ display: "flex" }}>
