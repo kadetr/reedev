@@ -36,15 +36,18 @@ const PdfViewScreen = ({ match, history }) => {
    useEffect(() => {
       dispatch(getPdfDetails(pdfId));
       dispatch(showHighlightsByPdf(pdfId));
+      console.log("1: "+pdfId)
    }, []);
    useEffect(() => {
-         dispatch(showHighlightsByPdf(pdfId));   
+         dispatch(showHighlightsByPdf(pdfId));
+         console.log("2: "+pdfId)   
    }, [highlightAdd]);
 
    const submitHighlightHandler = (content, position, comment, pdfId) => {
       setArea(false);
       dispatch(addHighlight(content, position, comment, pdfId));
-      dispatch(showHighlightsByPdf(pdfId));
+      console.log("3: "+pdfId)
+      //dispatch(showHighlightsByPdf(pdfId));
       
       
       
