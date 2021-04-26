@@ -273,24 +273,6 @@ index f939b20..d30e103 100644
        onSelection: (startTarget, boundingRect, resetSelection) => {
          const page = getPageFromElement(startTarget);
  
-diff --git a/node_modules/react-pdf-highlighter/build/components/PdfLoader.js b/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
-index 793f01c..a149c57 100644
---- a/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
-+++ b/node_modules/react-pdf-highlighter/build/components/PdfLoader.js
-@@ -86,10 +86,10 @@ class PdfLoader extends Component {
-       error: null
-     });
-     Promise.resolve().then(() => discardedDocument && discardedDocument.destroy()).then(() => url && getDocument({
--      url,
-+      url: url,
-       ownerDocument,
--      cMapUrl,
--      cMapPacked
-+      cMapUrl: "pdfjs/cmaps/",
-+      cMapPacked: true,
-     }).promise.then(pdfDocument => {
-       this.setState({
-         pdfDocument
 diff --git a/node_modules/react-pdf-highlighter/build/components/Popup.js b/node_modules/react-pdf-highlighter/build/components/Popup.js
 index ef9eb38..245cfa3 100644
 --- a/node_modules/react-pdf-highlighter/build/components/Popup.js
