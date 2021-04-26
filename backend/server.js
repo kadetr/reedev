@@ -31,6 +31,8 @@ app.use("/api/highlights", highlightRoutes);
 app.use("/api/pdfs", pdfRoutes);
 app.use("/api/uploads", uploadRoutes);
 
+app.enable('trust proxy');
+
 const __dirname = path.resolve();
 app.use("/public", express.static(path.join(__dirname, "/public")));
 
