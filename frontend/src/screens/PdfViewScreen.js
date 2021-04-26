@@ -34,7 +34,8 @@ const PdfViewScreen = ({ match, history }) => {
    };
 
    useEffect(() => {
-      dispatch(getPdfDetails(pdfId));
+      if(!loading)
+         dispatch(getPdfDetails(pdfId));
       dispatch(showHighlightsByPdf(pdfId));
    }, []);
    useEffect(() => {
