@@ -33,6 +33,14 @@ app.use("/api/uploads", uploadRoutes);
 
 app.enable('trust proxy');
 
+app.use(function (req, res, next) {
+	if (req.headers['x-forwarded-proto'] !== 'https'){
+      return res.status(404).send('Not found');
+    } else {
+    next();
+    }
+})
+
 const __dirname = path.resolve();
 app.use("/public", express.static(path.join(__dirname, "/public")));
 
