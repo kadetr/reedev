@@ -9,6 +9,7 @@
       "@testing-library/user-event": "^12.8.3",
       "axios": "^0.21.1",
       "concurrently": "^6.0.0",
+      "painterro": "^1.2.51",
       "patch-package": "^6.4.7",
       "react": "^17.0.1",
       "react-dom": "^17.0.1",

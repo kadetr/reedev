@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Painterro from "painterro"
 import { getPdfDetails } from "../actions/pdfActions";
 import { showHighlightsByPdf, addHighlight } from "../actions/highlightActions";
 import { addComment } from "../actions/commentActions";
@@ -28,6 +29,11 @@ const PdfViewScreen = ({ match, history }) => {
    const chooseArea = () => {
       setArea(true);
    };
+
+   const chooseDraw = () => {
+      Painterro().show()
+   };
+
 
    const selectHighlight = (_highlight) => {
       setHighlight(_highlight);
@@ -68,6 +74,7 @@ const PdfViewScreen = ({ match, history }) => {
          <CommentBar
             chooseArea={chooseArea}
             chooseText={chooseText}
+            chooseDraw ={chooseDraw}
             highlight={highlight}
             submitCommentHandler={submitCommentHandler}
          />
