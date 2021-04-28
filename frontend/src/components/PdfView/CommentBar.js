@@ -59,7 +59,7 @@ function CommentBar({
                select area
             </div>
 
-            <div onClick={chooseDraw} style={{ cursor: "pointer" }}>
+            <div onClick={chooseDraw} style={{ cursor: "pointer", zIndex:"100" }}>
                select draw
             </div>
          </div>
