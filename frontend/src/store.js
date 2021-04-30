@@ -52,8 +52,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
    : null;
 
 const initialState = {
-   userLogin: { userInfo: userInfoFromStorage },
-   pdfDetails: {pdf: null},
+   userLogin: { userInfo: userInfoFromStorage }
 };
 
 const middleware = [thunk];

@@ -18,9 +18,9 @@ connectDB();
 
 const app = express();
 
-if (process.env.NODE_DEV === "development") {
-   app.use(morgan("dev"));
-}
+// if (process.env.NODE_DEV === "development") {
+//    app.use(morgan("dev"));
+// }
 
 app.use(cors());
 app.use(express.json());
@@ -31,20 +31,21 @@ app.use("/api/highlights", highlightRoutes);
 app.use("/api/pdfs", pdfRoutes);
 app.use("/api/uploads", uploadRoutes);
 
-app.enable('trust proxy');
+ app.enable('trust proxy');
 
-app.use(function (req, res, next) {
-	if (req.headers['x-forwarded-proto'] !== 'https'){
-      return res.status(404).send('Not found');
-    } else {
-    next();
-    }
-})
+// app.use(function (req, res, next) {
+// 	if (req.headers['x-forwarded-proto'] !== 'https'){
+//       return res.status(404).send('Not found');
+//     } else {
+//     next();
+//     }
+// })
 
 const __dirname = path.resolve();
 app.use("/public", express.static(path.join(__dirname, "/public")));
 
 // app.use("/uploads", express.static("uploads"));
+ //app.use("/public", express.static("public"));
 
 if (process.env.NODE_ENV === "production") {
    app.use(express.static(path.join(__dirname, "frontend/build")));

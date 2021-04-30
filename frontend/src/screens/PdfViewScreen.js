@@ -11,6 +11,7 @@ const PdfViewScreen = ({ match, history }) => {
    const pdfId = match.params.id;
    const [area, setArea] = useState(false);
    const [highlight, setHighlight] = useState();
+   const [draw,setDraw] = useState(false)
 
    const dispatch = useDispatch();
 
@@ -31,9 +32,9 @@ const PdfViewScreen = ({ match, history }) => {
    };
 
    const chooseDraw = () => {
-      Painterro().show()
+      setDraw(true)
+      Painterro({onClose: function (){setDraw(false)}, zIndex: 100}).show()
    };
-
 
    const selectHighlight = (_highlight) => {
       setHighlight(_highlight);
@@ -42,7 +43,7 @@ const PdfViewScreen = ({ match, history }) => {
    useEffect(() => {
       dispatch(getPdfDetails(pdfId));
       dispatch(showHighlightsByPdf(pdfId));
-   }, []);
+   }, [draw]);
    useEffect(() => {
          dispatch(showHighlightsByPdf(pdfId));   
    }, [highlightAdd]);
@@ -63,7 +64,7 @@ const PdfViewScreen = ({ match, history }) => {
 
    return (
       <div style={{ display: "flex" }}>
-         {success ? <PdfView
+         {success&&!draw ? <PdfView
             url={pdf.url}
             pdfId={pdfId}
             area={area}

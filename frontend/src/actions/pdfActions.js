@@ -69,11 +69,13 @@ export const getPdfDetails = (id) => async (dispatch, getState) => {
       };
 
       const { data } = await axios.get(`/api/pdfs/${id}`, config);
+  
 
       dispatch({
          type: PDF_DETAILS_SUCCESS,
          payload: data,
       });
+
    } catch (error) {
       dispatch({
          type: PDF_DETAILS_FAIL,
