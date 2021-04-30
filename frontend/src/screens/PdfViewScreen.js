@@ -33,7 +33,7 @@ const PdfViewScreen = ({ match, history }) => {
 
    const chooseDraw = () => {
       setDraw(true)
-      Painterro({onClose: function (){setDraw(false)}, zIndex: 100}).show()
+      Painterro({onClose: function (){setDraw(false)}, hiddenTools: ['crop', 'line', 'arrow', 'rect', 'ellipse' ], toolbarPosition: "top",defaultSize: "640x480"}).show()
    };
 
    const selectHighlight = (_highlight) => {

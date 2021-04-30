@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-   position: fixed;
+   position: relative;
    bottom: 0;
    left: 0;
    right: 0;
