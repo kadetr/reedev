@@ -4,7 +4,7 @@ const highlightSchema = mongoose.Schema(
    {
       content: {
          image: { type: String },
-         text: { type: String },
+         text: { type: String }
       },
       position: {
          boundingRect: {
@@ -35,6 +35,7 @@ const highlightSchema = mongoose.Schema(
       pdfId: { type: String },
       userId: { type: String },
       name: { type: String },
+      drawUrl: {type: String}
    },
    {
       timestamps: true,

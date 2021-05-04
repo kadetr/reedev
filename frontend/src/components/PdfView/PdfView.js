@@ -43,6 +43,7 @@ type Props = {
       comment: T_Comment
    ) => void,
    selectHighlight: (T_Highlight) => void,
+   openDraw: (content: T_Content, position: T_Position, pdfId: string)=> void,
 };
 
 type State = {
@@ -149,6 +150,7 @@ class PdfView extends Component<Props, State> {
          url,
          highlights,
          pdfId,
+         openDraw,
          submitHighlightHandler,
          selectHighlight,
       } = this.props;
@@ -189,6 +191,7 @@ class PdfView extends Component<Props, State> {
                         ) => (
                            <Tip
                               onOpen={transformSelection}
+                              onDraw ={() =>{openDraw(content, position, pdfId)}}
                               onConfirm={(comment) => {
                                  this.addNewHighlight({
                                     content,
@@ -245,16 +248,16 @@ class PdfView extends Component<Props, State> {
 
                            return (
                               <Popup
-                                 popupContent={
-                                    <HighlightPopup {...highlight} />
-                                 }
-                                 onClick={(popupContent) =>
-                                    setTip(
-                                       highlight,
-                                       (highlight) => popupContent
-                                    )
-                                 }
-                                 onMouseOut={hideTip}
+                                 // popupContent={highlight.comment ?
+                                 //    <HighlightPopup {...highlight} /> : null
+                                 // }
+                                 // onClick={(popupContent) =>
+                                 //    setTip(
+                                 //       highlight,
+                                 //       (highlight) => popupContent
+                                 //    )
+                                 // }
+                                 // onMouseOut={hideTip}
                                  key={index}
                                  children={component}
                               />

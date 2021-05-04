@@ -8,6 +8,9 @@ import {
    ADD_HIGHLIGHT_REQUEST,
    ADD_HIGHLIGHT_SUCCESS,
    ADD_HIGHLIGHT_FAIL,
+   ADD_DRAW_HIGHLIGHT_SUCCESS,
+   ADD_DRAW_HIGHLIGHT_REQUEST,
+   ADD_DRAW_HIGHLIGHT_FAIL,
 } from "../constants/highlightConstants";
 
 export const highlightViewReducer = (state = { highlights: [] }, action) => {
@@ -52,6 +55,19 @@ export const highlightAddReducer = (state = {}, action) => {
       case ADD_HIGHLIGHT_SUCCESS:
          return { loading: false, success: true, highlight: action.payload };
       case ADD_HIGHLIGHT_FAIL:
+         return { loading: false, error: action.payload };
+      default:
+         return state;
+   }
+};
+
+export const drawHighlightAddReducer = (state = {}, action) => {
+   switch (action.type) {
+      case ADD_DRAW_HIGHLIGHT_REQUEST:
+         return { loading: true };
+      case ADD_DRAW_HIGHLIGHT_SUCCESS:
+         return { loading: false, success: true, highlight: action.payload };
+      case ADD_DRAW_HIGHLIGHT_FAIL:
          return { loading: false, error: action.payload };
       default:
          return state;

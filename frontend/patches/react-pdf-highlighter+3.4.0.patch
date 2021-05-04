@@ -274,10 +274,10 @@ index f939b20..d30e103 100644
          const page = getPageFromElement(startTarget);
  
 diff --git a/node_modules/react-pdf-highlighter/build/components/Popup.js b/node_modules/react-pdf-highlighter/build/components/Popup.js
-index ef9eb38..245cfa3 100644
+index ef9eb38..410587e 100644
 --- a/node_modules/react-pdf-highlighter/build/components/Popup.js
 +++ b/node_modules/react-pdf-highlighter/build/components/Popup.js
-@@ -14,16 +14,16 @@ class Popup extends Component {
+@@ -14,27 +14,27 @@ class Popup extends Component {
  
    render() {
      const {
@@ -293,10 +293,62 @@ index ef9eb38..245cfa3 100644
            mouseIn: true
          });
 -        onMouseOver( /*#__PURE__*/React.createElement(MouseMonitor, {
-+        onClick( /*#__PURE__*/React.createElement(MouseMonitor, {
-           onMoveAway: () => {
-             if (this.state.mouseIn) {
-               return;
+-          onMoveAway: () => {
+-            if (this.state.mouseIn) {
+-              return;
+-            }
++        // onClick( /*#__PURE__*/React.createElement(MouseMonitor, {
++        //   onMoveAway: () => {
++        //     if (this.state.mouseIn) {
++        //       return;
++        //     }
+ 
+-            onMouseOut();
+-          },
+-          paddingX: 60,
+-          paddingY: 30,
+-          children: popupContent
+-        }));
++        //     onMouseOut();
++        //   },
++        //   paddingX: 60,
++        //   paddingY: 30,
++        //   children: popupContent
++        // }));
+       },
+       onMouseOut: () => {
+         this.setState({
+diff --git a/node_modules/react-pdf-highlighter/build/components/Tip.js b/node_modules/react-pdf-highlighter/build/components/Tip.js
+index 31e311b..b7d4c65 100644
+--- a/node_modules/react-pdf-highlighter/build/components/Tip.js
++++ b/node_modules/react-pdf-highlighter/build/components/Tip.js
+@@ -28,7 +28,8 @@ class Tip extends Component {
+   render() {
+     const {
+       onConfirm,
+-      onOpen
++      onOpen,
++      onDraw
+     } = this.props;
+     const {
+       compact,
+@@ -45,7 +46,15 @@ class Tip extends Component {
+           compact: false
+         });
+       }
+-    }, "Add highlight") : /*#__PURE__*/React.createElement("form", {
++    }, "add highlight",  /*#__PURE__*/React.createElement("div", {
++      className: "Tip__compact",
++      onClick: () => {
++        onDraw();
++        this.setState({
++          compact: false
++        });
++      }
++    }, "add sketch")) : /*#__PURE__*/React.createElement("form", {
+       className: "Tip__card",
+       onSubmit: event => {
+         event.preventDefault();
 diff --git a/node_modules/react-pdf-highlighter/build/types.js.flow b/node_modules/react-pdf-highlighter/build/types.js.flow
 index d955006..0c3e601 100644
 --- a/node_modules/react-pdf-highlighter/build/types.js.flow

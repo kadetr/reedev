@@ -21,6 +21,7 @@ import {
    highlightViewReducer,
    highlightViewByPdfReducer,
    highlightAddReducer,
+   drawHighlightAddReducer
 } from "./reducers/highlightReducers";
 import {
    pdfUploadReducer,
@@ -42,6 +43,7 @@ const reducer = combineReducers({
    highlightView: highlightViewReducer,
    highlightViewByPdf: highlightViewByPdfReducer,
    highlightAdd: highlightAddReducer,
+   drawHighlightAdd: drawHighlightAddReducer,
    pdfDetails: pdftDetailsReducer,
    pdfUpload: pdfUploadReducer,
    pdfList: pdfListReducer,

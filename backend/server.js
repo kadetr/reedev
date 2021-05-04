@@ -11,6 +11,7 @@ import commentRoutes from "./routes/commentRoutes.js";
 import highlightRoutes from "./routes/highlightRoutes.js";
 import pdfRoutes from "./routes/pdfRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import drawHighlightRoutes from "./routes/drawHighlightRoutes.js"
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/highlights", highlightRoutes);
 app.use("/api/pdfs", pdfRoutes);
 app.use("/api/uploads", uploadRoutes);
+app.use("/api/draw-uploads", drawHighlightRoutes);
 
  app.enable('trust proxy');
 

@@ -75,7 +75,7 @@ function CommentBar({
                   >
                      <div>
                         <p>{highlight.name}</p>
-                        <strong>{highlight.comment.text}</strong>
+                        <strong>{highlight.drawUrl ? <img src={highlight.drawUrl} alt="hop" style={{width: "100%"}} />: highlight.comment.text}</strong>
                         {highlight.content.text ? (
                            <blockquote style={{ marginTop: "0.5rem" }}>
                               {`${highlight.content.text.slice(0, 90).trim()}…`}

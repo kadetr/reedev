@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Painterro from "painterro"
 import { getPdfDetails } from "../actions/pdfActions";
-import { showHighlightsByPdf, addHighlight } from "../actions/highlightActions";
+import { showHighlightsByPdf, addHighlight, addDrawHighlight } from "../actions/highlightActions";
 import { addComment } from "../actions/commentActions";
 import { useDispatch, useSelector } from "react-redux";
 import PdfView from "../components/PdfView/PdfView.js";
@@ -20,6 +20,7 @@ const PdfViewScreen = ({ match, history }) => {
    const highlightViewByPdf = useSelector((state) => state.highlightViewByPdf);
    const { loadingH, errorH, highlights } = highlightViewByPdf;
    const highlightAdd = useSelector((state) => state.highlightAdd);
+   const drawHighlightAdd = useSelector((state) => state.drawHighlightAdd);
  
 
 
@@ -36,6 +37,21 @@ const PdfViewScreen = ({ match, history }) => {
       Painterro({onClose: function (){setDraw(false)}, hiddenTools: ['crop', 'line', 'arrow', 'rect', 'ellipse' ], toolbarPosition: "top",defaultSize: "640x480"}).show()
    };
 
+   const openDraw =(content, position, pdfId)=>{
+      setDraw(true)
+      Painterro({
+         saveHandler: function (image, done) {
+            dispatch(addDrawHighlight(content, position, pdfId, image))
+            setDraw(false)
+            done(true);     
+         },
+         onClose: function (){setDraw(false)}, 
+         hiddenTools: ['crop', 'arrow'], 
+         toolbarPosition: "top",
+         defaultSize: "640x480"
+      }).show()
+   }
+
    const selectHighlight = (_highlight) => {
       setHighlight(_highlight);
    };
@@ -46,7 +62,7 @@ const PdfViewScreen = ({ match, history }) => {
    }, [draw]);
    useEffect(() => {
          dispatch(showHighlightsByPdf(pdfId));   
-   }, [highlightAdd]);
+   }, [highlightAdd, drawHighlightAdd]);
 
    const submitHighlightHandler = (content, position, comment, pdfId) => {
       setArea(false);
@@ -69,6 +85,7 @@ const PdfViewScreen = ({ match, history }) => {
             pdfId={pdfId}
             area={area}
             highlights={highlights}
+            openDraw={openDraw}
             submitHighlightHandler={submitHighlightHandler}
             selectHighlight={selectHighlight}
          />: null}

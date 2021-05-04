@@ -43,4 +43,40 @@ const addHighlight = asyncHandler(async (req, res) => {
    });
 });
 
-export { addHighlight, getHighlights, getHighlightsByPdfId, deleteHighlight };
+// @desc    Create a draw
+// @route   POST /api/draw-upload
+// @access  Private/Instructor/Admin
+const addDrawHighlight = asyncHandler(async (req, res) => {
+   const { userId, name, content, position, pdfId  } = req.body;
+   const drawUrl =
+      req.protocol + "://" + req.get("host") + "/public/" + req.file.filename;
+
+      let posObj = JSON.parse(position)
+      let contentObj = JSON.parse(content)
+
+   const highlight = await Highlight.create({
+      userId,
+      name, 
+      content: contentObj,
+      position: posObj,
+      pdfId,
+      
+      drawUrl,
+   });
+
+   if (highlight) {
+      res.status(201).json({
+         name: highlight.name,
+         userId: highlight.userId,
+         pdfId: highlight.pdfId,
+         content: highlight.content,
+         position: highlight.position,
+         drawUrl: highlight.drawUrl
+      });
+   } else {
+      res.status(400);
+      throw new Error("invalid draw data");
+   }
+});
+
+export { addHighlight, getHighlights, getHighlightsByPdfId, deleteHighlight, addDrawHighlight };

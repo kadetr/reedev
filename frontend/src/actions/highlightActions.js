@@ -9,6 +9,9 @@ import {
    ADD_HIGHLIGHT_SUCCESS,
    ADD_HIGHLIGHT_FAIL,
    ADD_HIGHLIGHT_REQUEST,
+   ADD_DRAW_HIGHLIGHT_REQUEST,
+   ADD_DRAW_HIGHLIGHT_SUCCESS,
+   ADD_DRAW_HIGHLIGHT_FAIL
 } from "../constants/highlightConstants";
 import { logout } from "./userActions";
 
@@ -72,6 +75,60 @@ export const showHighlightsByPdf = (id) => async (dispatch, getState) => {
             error.response && error.response.data.message
                ? error.response.data.message
                : error.message,
+      });
+   }
+};
+
+export const addDrawHighlight = (content, position, pdfId, image) => async (dispatch, getState) => {
+   try {
+      dispatch({
+         type: ADD_DRAW_HIGHLIGHT_REQUEST,
+      });
+
+      const {
+         userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+         headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+            
+         },
+      };
+
+      let userId = userInfo._id;
+      let name = userInfo.name;
+      let contentStr = JSON.stringify(content)
+      let posStr = JSON.stringify(position)
+      
+
+
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("name", name);
+      formData.append("content", contentStr);
+      formData.append("position", posStr);
+      formData.append("pdfId", pdfId);
+      formData.append("image", image.asBlob("image/jpeg"));
+
+
+      const { data } = await axios.post("/api/draw-uploads", formData, config);
+      dispatch({
+         type: ADD_DRAW_HIGHLIGHT_SUCCESS,
+         payload: data,
+      });
+   } catch (error) {
+      const message =
+         error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+      if (message === "Not authorized, token failed") {
+         dispatch(logout());
+      }
+      dispatch({
+         type: ADD_DRAW_HIGHLIGHT_FAIL,
+         payload: message,
       });
    }
 };
