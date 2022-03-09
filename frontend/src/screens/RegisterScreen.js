@@ -21,7 +21,6 @@ const RegisterScreen = ({ location, history }) => {
       event.preventDefault();
       if (password !== confirmPassword) {
          //setMessage('Passwords do not match')
-         console.log("sharted!!");
       } else {
          dispatch(register(name, email, password));
       }

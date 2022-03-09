@@ -10,6 +10,7 @@ import {
    userListAdminReducer,
    userDeleteAdminReducer,
    userUpdateAdminReducer,
+   userDetailsAdminReducer
 } from "./reducers/userReducers";
 
 import {
@@ -37,6 +38,7 @@ const reducer = combineReducers({
    userListAdmin: userListAdminReducer,
    userDeleteAdmin: userDeleteAdminReducer,
    userUpdateAdmin: userUpdateAdminReducer,
+   userDetailsAdmin: userDetailsAdminReducer,
    commentView: commentViewReducer,
    commentsViewByHighlight: commentsViewByHighlightReducer,
    commentAdd: commentAddReducer,
@@ -47,6 +49,7 @@ const reducer = combineReducers({
    pdfDetails: pdftDetailsReducer,
    pdfUpload: pdfUploadReducer,
    pdfList: pdfListReducer,
+   
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

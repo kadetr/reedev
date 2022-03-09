@@ -9,6 +9,8 @@ import {
    PDF_LIST_REQUEST,
    PDF_LIST_SUCCESS,
    PDF_LIST_FAIL,
+   PDF_DETAILS_RESET,
+   PDF_LIST_RESET,
 } from "../constants/pdfConstants";
 
 export const pdfUploadReducer = (state = {}, action) => {
@@ -34,6 +36,8 @@ export const pdftDetailsReducer = (state = { pdf: {} }, action) => {
          return { loading: false, success:true, pdf: action.payload };
       case PDF_DETAILS_FAIL:
          return { loading: false, error: action.payload };
+      case PDF_DETAILS_RESET:
+         return { };
       default:
          return state;
    }
@@ -47,6 +51,8 @@ export const pdfListReducer = (state = { pdfs: [] }, action) => {
          return { loading: false, pdfs: action.payload };
       case PDF_LIST_FAIL:
          return { loading: false, error: action.payload };
+      case PDF_LIST_RESET:
+         return { };
       default:
          return state;
    }

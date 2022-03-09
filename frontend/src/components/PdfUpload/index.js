@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
    Container,
    FormButton,
@@ -8,7 +7,6 @@ import {
    Form,
    FormInput,
    FormWrap,
-   Icon,
 } from "./pdfUploadElements";
 
 const PdfUpload = ({ submitHandler }) => {
@@ -32,7 +30,6 @@ const PdfUpload = ({ submitHandler }) => {
                         value={name}
                         onChange={(e) => {
                            setName(e.target.value);
-                           //    onEmailChange(e.target.value);
                         }}
                         required
                      />

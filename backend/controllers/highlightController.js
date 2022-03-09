@@ -6,12 +6,14 @@ import Highlight from "../models/highlightModel.js";
 // @route   GET /api/highlights
 // @access  Private
 const getHighlights = asyncHandler(async (req, res) => {
-   const highlights = await Highlight.find({});
+   const { pdfId  } = req.body
+   const highlights = await Highlight.find({pdfId});
    res.json(highlights);
+   
 });
 
 const getHighlightsByPdfId = asyncHandler(async (req, res) => {
-   const highlights = await Highlight.find({ pdfId: req.params.id });
+   const highlights = await Highlight.find({ pdfId: req.params.pdfId });
    res.json(highlights);
 });
 
@@ -31,16 +33,23 @@ const deleteHighlight = asyncHandler(async (req, res) => {
 });
 
 const addHighlight = asyncHandler(async (req, res) => {
-   const { userId, name, pdfId, content, position, comment } = req.body;
+
+   const {  content,
+      position,
+      comment,
+      pdfId, 
+      userId, 
+      name } = req.body;
 
    const highlight = await Highlight.create({
-      userId,
-      name,
-      pdfId,
       content,
       position,
       comment,
+      pdfId, 
+      userId, 
+      name
    });
+
 });
 
 // @desc    Create a draw
@@ -79,4 +88,4 @@ const addDrawHighlight = asyncHandler(async (req, res) => {
    }
 });
 
-export { addHighlight, getHighlights, getHighlightsByPdfId, deleteHighlight, addDrawHighlight };
+export { addHighlight, getHighlights, deleteHighlight, addDrawHighlight, getHighlightsByPdfId };

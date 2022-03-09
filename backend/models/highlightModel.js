@@ -31,7 +31,6 @@ const highlightSchema = mongoose.Schema(
          text: { type: String },
          emoji: { type: String },
       },
-      id: { type: String },
       pdfId: { type: String },
       userId: { type: String },
       name: { type: String },

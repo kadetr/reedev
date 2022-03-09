@@ -96,6 +96,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
          name: updatedUser.name,
          email: updatedUser.email,
          isAdmin: updatedUser.isAdmin,
+         isInstructor: updatedUser.isInstructor,
          token: generateToken(updatedUser._id),
       });
    } else {
@@ -152,6 +153,7 @@ const updateUser = asyncHandler(async (req, res) => {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.isAdmin = req.body.isAdmin;
+      user.isInstructor = req.body.isInstructor;
 
       const updatedUser = await user.save();
 
@@ -160,6 +162,7 @@ const updateUser = asyncHandler(async (req, res) => {
          name: updatedUser.name,
          email: updatedUser.email,
          isAdmin: updatedUser.isAdmin,
+         isInstructor: updatedUser.isInstructor
       });
    } else {
       res.status(404);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 import {
    Table,
    Th,
@@ -11,11 +11,6 @@ import {
 } from "./pdfListElements";
 
 const PdfList = ({ pdfs = [] }) => {
-   let flag = false;
-
-   useEffect(() => {
-      if (!pdfs) flag = true;
-   }, [pdfs, flag]);
    return (
       <>
          <H1>Pdfs</H1>

@@ -6,12 +6,14 @@ import {
    addHighlight,
    deleteHighlight,
 } from "../controllers/highlightController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, instructor } from "../middleware/authMiddleware.js";
 
-router.route("/").get(protect, getHighlights).post(protect, addHighlight);
+router.route("/").post(protect, addHighlight);
 router
    .route("/:id")
-   .delete(protect, admin, deleteHighlight)
+   .delete(protect, instructor, deleteHighlight)
+router
+   .route("/:pdfId")
    .get(protect, getHighlightsByPdfId);
 
 export default router;

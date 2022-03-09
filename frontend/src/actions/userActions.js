@@ -24,6 +24,9 @@ import {
    USER_UPDATE_SUCCESS_ADMIN,
    USER_UPDATE_REQUEST_ADMIN,
    USER_UPDATE_FAIL_ADMIN,
+   USER_DETAILS_REQUEST_ADMIN,
+   USER_DETAILS_SUCCESS_ADMIN,
+   USER_DETAILS_FAIL_ADMIN,
 } from "../constants/userConstants";
 
 export const login = (email, password) => async (dispatch) => {
@@ -124,9 +127,9 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
          },
       };
-      let p = id;
-      if (id === "profile") p = userInfo._id;
-      const { data } = await axios.get(`/api/users/${p}`, config);
+      // let p = id;
+      // if (id === "profile") p = userInfo._id;
+      const { data } = await axios.get(`/api/users/${id}`, config);
 
       dispatch({
          type: USER_DETAILS_SUCCESS,
@@ -261,7 +264,7 @@ export const deleteUserAdmin = (id) => async (dispatch, getState) => {
    }
 };
 
-export const updateUserAdmin = ({ id, name, email, isAdmin }) => async (
+export const updateUserAdmin = ({ id, name, email, isAdmin, isInstructor }) => async (
    dispatch,
    getState
 ) => {
@@ -281,11 +284,9 @@ export const updateUserAdmin = ({ id, name, email, isAdmin }) => async (
          },
       };
 
-      console.log(id);
-
       const { data } = await axios.put(
          `/api/users/${id}`,
-         { name, email, isAdmin },
+         { name, email, isAdmin, isInstructor },
          config
       );
 
@@ -304,6 +305,43 @@ export const updateUserAdmin = ({ id, name, email, isAdmin }) => async (
       }
       dispatch({
          type: USER_UPDATE_FAIL_ADMIN,
+         payload: message,
+      });
+   }
+};
+
+export const getUserDetailsAdmin = (id) => async (dispatch, getState) => {
+   try {
+      dispatch({
+         type: USER_DETAILS_REQUEST_ADMIN,
+      });
+
+      const {
+         userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+         headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+         },
+      };
+      
+      const { data } = await axios.get(`/api/users/${id}`, config);
+
+      dispatch({
+         type: USER_DETAILS_SUCCESS_ADMIN,
+         payload: data,
+      });
+   } catch (error) {
+      const message =
+         error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+      if (message === "Not authorized, token failed") {
+         dispatch(logout());
+      }
+      dispatch({
+         type: USER_DETAILS_FAIL_ADMIN,
          payload: message,
       });
    }

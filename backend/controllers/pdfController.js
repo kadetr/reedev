@@ -45,4 +45,19 @@ const getPdfs = asyncHandler(async (req, res) => {
    res.json(pdfs);
 });
 
-export { createPdf, getPdfById, getPdfs };
+// @desc    Delete pdf
+// @route   DELETE /api/pdfs/:id
+// @access  Private/Instructor
+const deletePdf = asyncHandler(async (req, res) => {
+   const pdf = await Pdf.findById(req.params.id);
+
+   if (pdf) {
+      await pdf.remove();
+      res.json({ message: "pdf removed" });
+   } else {
+      res.status(404);
+      throw new Error("pdf not found");
+   }
+});
+
+export { createPdf, getPdfById, getPdfs, deletePdf };

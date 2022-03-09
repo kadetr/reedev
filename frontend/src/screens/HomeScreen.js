@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showHighlights } from "../actions/highlightActions";
 import { getPdfDetails, listPdfs } from "../actions/pdfActions";
 import PdfList from "../components/PdfList";
+import {PDF_DETAILS_RESET} from "../constants/pdfConstants"
 
 const HomeScreen = ({ history }) => {
    const dispatch = useDispatch();
@@ -14,22 +15,16 @@ const HomeScreen = ({ history }) => {
    const pdfList = useSelector((state) => state.pdfList);
    const { loading: loadingPdf, error: errorPdf, pdfs } = pdfList;
 
-   const highlightView = useSelector((state) => state.highlightView);
-   const { loading, error, highlights } = highlightView;
-
    useEffect(() => {
-      // dispatch(showHighlights());
       if (!userInfo) {
          history.push("/login");
       } else {
+         dispatch({type: PDF_DETAILS_RESET})
          dispatch(listPdfs());
       }
-   }, [dispatch]);
-   //console.log(highlights);
+   }, [dispatch, history]);
    return (
       <div>
-         {/* <PDFComp highlights={highlights} url={pdf.url} /> */}
-
          <PdfList pdfs={pdfs} />
       </div>
    );

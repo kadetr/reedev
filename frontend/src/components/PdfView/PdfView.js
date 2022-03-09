@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker.js";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 //added PdfId,need to call
 //gethighlightbypdfid, need to create getPdfbyid
@@ -154,7 +154,7 @@ class PdfView extends Component<Props, State> {
          submitHighlightHandler,
          selectHighlight,
       } = this.props;
-      // const highlights = [];
+  
 
       return (
          <div

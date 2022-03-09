@@ -47,7 +47,7 @@ export const showHighlights = () => async (dispatch, getState) => {
    }
 };
 
-export const showHighlightsByPdf = (id) => async (dispatch, getState) => {
+export const showHighlightsByPdf = (pdfId) => async (dispatch, getState) => {
    try {
       dispatch({ type: VIEW_HIGHLIGHTS_BY_PDF_REQUEST });
 
@@ -62,7 +62,8 @@ export const showHighlightsByPdf = (id) => async (dispatch, getState) => {
          },
       };
 
-      const { data } = await axios.get(`/api/highlights/${id}`, config);
+      const { data } = await axios.get(`/api/highlights/${pdfId}`, config);
+
 
       dispatch({
          type: VIEW_HIGHLIGHTS_BY_PDF_SUCCESS,
@@ -138,6 +139,7 @@ export const addHighlight = (content, position, comment, pdfId) => async (
    getState
 ) => {
    try {
+
       dispatch({
          type: ADD_HIGHLIGHT_REQUEST,
       });
@@ -154,15 +156,19 @@ export const addHighlight = (content, position, comment, pdfId) => async (
             Authorization: `Bearer ${userInfo.token}`,
          },
       };
+
+  
       const { data } = await axios.post(
-         "/api/highlights",
+         `/api/highlights`,
          { content, position, comment, pdfId, userId, name },
          config
       );
+      
       dispatch({
          type: ADD_HIGHLIGHT_SUCCESS,
          payload: data,
       });
+
    } catch (error) {
       const message =
          error.response && error.response.data.message

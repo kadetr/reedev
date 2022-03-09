@@ -32,15 +32,14 @@ const Header = ({ toggle }) => {
             <MobileIcon onClick={toggle}>
                <FaBars />
             </MobileIcon>
-
+            <Icon to="/">reedy.</Icon>
             <NavMenu>
+            
                {!userInfo ? (
                   <>
+                  
                      <NavItem>
                         <NavLinks to="/register">Register</NavLinks>
-                     </NavItem>
-                     <NavItem>
-                        <NavLinks to="/">List</NavLinks>
                      </NavItem>
 
                      <NavItem>
@@ -49,18 +48,17 @@ const Header = ({ toggle }) => {
                   </>
                ) : (
                   <>
-                     <NavItem>
-                        <NavLinks to="/">List</NavLinks>
-                     </NavItem>
-                     <NavItem>
-                        <NavLinks to="/profile">Profile</NavLinks>
-                     </NavItem>
-
-                     <NavItem>
-                        <NavLinks onClick={logoutHandler} to="/">
+                  <NavDropdownItem>
+                     <NavDropdownBtn>Profile</NavDropdownBtn>
+                     <NavDropdownContent>
+                        <NavDropdownContentLink to="/profile">
+                           Account
+                        </NavDropdownContentLink>
+                        <NavDropdownContentLink onClick={logoutHandler} to="/">
                            Logout
-                        </NavLinks>
-                     </NavItem>
+                        </NavDropdownContentLink>
+                     </NavDropdownContent>
+                  </NavDropdownItem>
                   </>
                )}
                {userInfo && userInfo.isAdmin && (
@@ -70,12 +68,23 @@ const Header = ({ toggle }) => {
                         <NavDropdownContentLink to="/admin/userlist">
                            Users
                         </NavDropdownContentLink>
+                        <NavDropdownContentLink to="/instructor/uploadpdf">
+                           Upload
+                        </NavDropdownContentLink>
                      </NavDropdownContent>
                   </NavDropdownItem>
                )}
-               <NavItem>
-                  <NavLinks to="/upload-pdf">upload pdf</NavLinks>
-               </NavItem>
+                {userInfo && userInfo.isInstructor && (
+                  <NavDropdownItem>
+                     <NavDropdownBtn>Instructor</NavDropdownBtn>
+                     <NavDropdownContent>
+                        <NavDropdownContentLink to="/instructor/uploadpdf">
+                           Upload
+                        </NavDropdownContentLink>
+                     </NavDropdownContent>
+                  </NavDropdownItem>
+               )}
+
             </NavMenu>
          </NavbarContainer>
       </Nav>

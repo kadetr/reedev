@@ -28,7 +28,7 @@ const UserListAdmin = ({ users = [], adminId, deleteHandler }) => {
                   <Tr key={user._id}>
                      <Td>{user.name}</Td>
                      <Td>{user.email}</Td>
-                     <Td>{user.isAdmin ? "admin" : "customer"}</Td>
+                     <Td>{user.isAdmin ? "admin" : user.isInstructor ? "instructor" : "student"}</Td>
                      <Td>
                         <EditUserLink
                            to={

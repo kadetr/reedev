@@ -7,8 +7,8 @@ import Profile from "../components/Profile";
 const ProfileScreen = ({ location, history }) => {
    const dispatch = useDispatch();
 
-   const userDetails = useSelector((state) => state.userDetails);
-   const { loading, error, user } = userDetails;
+   // const userDetails = useSelector((state) => state.userDetails);
+   // const { loading, error, user } = userDetails;
 
    const userLogin = useSelector((state) => state.userLogin);
    const { userInfo } = userLogin;
@@ -23,7 +23,7 @@ const ProfileScreen = ({ location, history }) => {
          // if (user._id) dispatch(getUserDetails("profile"));
          if (!userInfo || !userInfo.name || success) {
             dispatch({ type: USER_UPDATE_RESET });
-            dispatch(getUserDetails("profile"));
+            dispatch(getUserDetails(userInfo._id));
          }
       }
    }, [dispatch, history, userInfo, success]);

@@ -7,7 +7,6 @@ import {
    Form,
    FormInput,
    FormWrap,
-   Icon,
    Text,
 } from "./loginElements";
 

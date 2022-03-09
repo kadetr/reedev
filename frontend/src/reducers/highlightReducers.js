@@ -11,6 +11,8 @@ import {
    ADD_DRAW_HIGHLIGHT_SUCCESS,
    ADD_DRAW_HIGHLIGHT_REQUEST,
    ADD_DRAW_HIGHLIGHT_FAIL,
+   ADD_HIGHLIGHT_RESET,
+   ADD_DRAW_HIGHLIGHT_RESET,
 } from "../constants/highlightConstants";
 
 export const highlightViewReducer = (state = { highlights: [] }, action) => {
@@ -40,6 +42,7 @@ export const highlightViewByPdfReducer = (
          return {
             loading: false,
             highlights: action.payload,
+            success: true,
          };
       case VIEW_HIGHLIGHTS_BY_PDF_FAIL:
          return { loading: false, error: action.payload };
@@ -56,6 +59,8 @@ export const highlightAddReducer = (state = {}, action) => {
          return { loading: false, success: true, highlight: action.payload };
       case ADD_HIGHLIGHT_FAIL:
          return { loading: false, error: action.payload };
+      case ADD_HIGHLIGHT_RESET:
+            return {  };
       default:
          return state;
    }
@@ -69,6 +74,8 @@ export const drawHighlightAddReducer = (state = {}, action) => {
          return { loading: false, success: true, highlight: action.payload };
       case ADD_DRAW_HIGHLIGHT_FAIL:
          return { loading: false, error: action.payload };
+      case ADD_DRAW_HIGHLIGHT_RESET:
+         return {  };
       default:
          return state;
    }

@@ -16,7 +16,7 @@ import PdfViewScreen from "./screens/PdfViewScreen";
 
 const App = () => {
    const [isOpen, setIsOpen] = useState(false);
-   const [isOpenAdminBtn, setIsOpenAdminBtn] = useState(false);
+   // const [isOpenAdminBtn, setIsOpenAdminBtn] = useState(false);
 
    const toggle = () => {
       setIsOpen(!isOpen);
@@ -30,7 +30,7 @@ const App = () => {
          <Route path="/login" component={LoginScreen} />
          <Route path="/register" component={RegisterScreen} />
          <Route path="/profile" component={ProfileScreen} />
-         <Route path="/upload-pdf" component={PdfUploadScreen} />
+         <Route path="/instructor/uploadpdf" component={PdfUploadScreen} />
          <Route path="/pdfs/:id" component={PdfViewScreen} />
          <Route path="/admin/userlist" component={UserListScreen} />
          <Route path="/admin/users/:id/edit" component={UserEditScreen} />

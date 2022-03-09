@@ -11,7 +11,7 @@ export const Nav = styled.nav`
    font-size: 1rem;
    position: relative;
    top: 0;
-   z-index: 0;
+   // z-index: 2;
 
    @media screen and (max-width: 960px) {
       transition: 0.8s all ease;
@@ -22,7 +22,7 @@ export const NavbarContainer = styled.div`
    display: flex;
    justify-content: center;
    height: 80px;
-   z-index: 1;
+   // z-index: 1;
    width: 100%;
    padding: 0 24px;
    max-width: 1100px;
@@ -50,6 +50,8 @@ export const Icon = styled(Link)`
    color: #888888;
    font-weight: 700;
    font-size: 32px;
+   justify-content: start;
+   width: 20%;
 
    @media screen and (max-width: 480px) {
       margin-left: 16px;
@@ -59,10 +61,13 @@ export const Icon = styled(Link)`
 
 export const NavMenu = styled.ul`
    display: flex;
-   align-items: center;
+   justify-content: flex-end;
+   align-items: end;
    list-style: none;
    text-align: center;
-   // margin-right: -22px;
+   margin-right: -32px;
+   // z-index: 100;
+   width: 80%;
 
    @media screen and (max-width: 760px) {
       display: none;
@@ -100,6 +105,8 @@ export const NavDropdownBtn = styled.button`
    border: none;
    outline: none;
    color: #888888;
+   
+   
 
    background-color: inherit;
    font-family: inherit;
@@ -116,28 +123,36 @@ export const NavDropdownBtn = styled.button`
 export const NavDropdownContent = styled.div`
    display: none;
    position: absolute;
-   background-color: #f8d948;
-   min-width: 160px;
+   margin-left: -12px;
+   margin-top: -4px;
+   background-color: #888888;
+   min-width: 75px;
    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-   z-index: 1;
+  
+   
 `;
 
 export const NavDropdownContentLink = styled(Link)`
    float: none;
-   color: black;
-   padding: 12px 16px;
+   color: #f8d948;
+   padding: 8px 12px;
    text-decoration: none;
+   font-size: 0.9rem;
    display: block;
-   text-align: left;
+   text-align: right;
 
    &:hover {
-      background-color: #ddd;
+      background-color: #f8d948;
+      color: #888888;
    }
 `;
 
 export const NavDropdownItem = styled.li`
    float: left;
    overflow: hidden;
+   margin-right:32px;
+   z-index: 2;
+   
 
    &:hover ${NavDropdownContent} {
       display: block;

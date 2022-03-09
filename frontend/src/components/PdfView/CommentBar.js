@@ -13,7 +13,7 @@ type Props = {
    // toggleDocument: () => void,
    chooseArea: () => void,
    chooseText: () => void,
-   chooseDraw: () => void,
+   // chooseDraw: () => void,
    highlight: T_ManuscriptHighlight,
    submitCommentHandler: (parentId: string, comment: string) => void,
 };
@@ -25,7 +25,7 @@ const updateHash = (highlight) => {
 function CommentBar({
    chooseArea,
    chooseText,
-   chooseDraw,
+   // chooseDraw,
    highlight,
    submitCommentHandler,
 }: Props) {
@@ -59,9 +59,9 @@ function CommentBar({
                select area
             </div>
 
-            <div onClick={chooseDraw} style={{ cursor: "pointer" }}>
+            {/* <div onClick={chooseDraw} style={{ cursor: "pointer" }}>
                select draw
-            </div>
+            </div> */}
          </div>
          <div className="sidebar__highlights__list">
             <ul className="sidebar__highlights">

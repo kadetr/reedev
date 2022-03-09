@@ -3,7 +3,7 @@ const router = express.Router();
 import multer from "multer";
 import { v4 as uuid } from "uuid";
 import { createPdf } from "../controllers/pdfController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, instructor } from "../middleware/authMiddleware.js";
 
 const DIR = "public/";
 
@@ -29,6 +29,6 @@ let upload = multer({
    },
 });
 
-router.post("/", protect, upload.single("pdfFile"), createPdf);
+router.post("/", protect, instructor, upload.single("pdfFile"), createPdf);
 
 export default router;

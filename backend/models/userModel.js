@@ -21,6 +21,11 @@ const userSchema = mongoose.Schema(
          required: true,
          default: false,
       },
+      isInstructor:{
+         type: Boolean,
+         required: true,
+         default: false,
+      }
    },
    {
       timestamps: true,
