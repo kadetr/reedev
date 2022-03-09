@@ -25,3 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 .vscode/settings.json
 node_modules
+package-lock.json
+frontend/package-lock.json
