@@ -26,7 +26,7 @@ const UserEditScreen = ({ match, history }) => {
          history.push("/admin/userlist");
       } else {
          
-             dispatch(getUserDetailsAdmin(user._id));
+             dispatch(getUserDetailsAdmin(userId));
          
       }
    }, [dispatch, history, user, successUpdate]);

@@ -21,7 +21,7 @@ const Profile = ({ submitHandler, user }) => {
       setName(user.name);
       setEmail(user.email);
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
