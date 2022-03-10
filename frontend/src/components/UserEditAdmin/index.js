@@ -22,7 +22,7 @@ const UserEditAdmin = ({ submitHandler, user }) => {
       setIsAdmin(user.isAdmin);
       setIsInstructor(user.isInstructor);
     }
-  }, []);
+  }, [user]);
 
   return (
     <>

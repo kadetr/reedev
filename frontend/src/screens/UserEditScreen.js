@@ -26,10 +26,10 @@ const UserEditScreen = ({ match, history }) => {
          history.push("/admin/userlist");
       } else {
          
-             dispatch(getUserDetailsAdmin(userId));
+             dispatch(getUserDetailsAdmin(user._id));
          
       }
-   }, [dispatch, history, userId, successUpdate]);
+   }, [dispatch, history, user, successUpdate]);
 
    const submitHandler = (event, name, email, isAdmin, isInstructor) => {
       event.preventDefault();
