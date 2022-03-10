@@ -29,7 +29,7 @@ const UserEditScreen = ({ match, history }) => {
              dispatch(getUserDetailsAdmin(userId));
          
       }
-   }, [dispatch, history, user, successUpdate]);
+   }, [dispatch, history, userId, successUpdate]);
 
    const submitHandler = (event, name, email, isAdmin, isInstructor) => {
       event.preventDefault();
