@@ -6,8 +6,8 @@ import { protect, instructor } from "../middleware/authMiddleware.js"
 
 router.route("/:id").get(protect, getPdfById).delete(protect, instructor, deletePdf);
 router.route("/").get(protect, getPdfs);
-router
-   .route("/:id")
+// router
+//    .route("/:id")
    
 
 export default router;
